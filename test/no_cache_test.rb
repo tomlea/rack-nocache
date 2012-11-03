@@ -21,7 +21,7 @@ class TestRackNocache < Test::Unit::TestCase
 
   def test_should_set_cache_busting_headers
     go!
-    assert_equal Rack::Nocache::CACHE_BUSTER, @response_headers_out.slice(*Rack::Nocache::CACHE_BUSTER.keys)
+    assert_equal Rack::Nocache::CACHE_BUSTER.values, @response_headers_out.values_at(*Rack::Nocache::CACHE_BUSTER.keys)
   end
 
   def test_should_delete_etag_in_response
