@@ -10,7 +10,7 @@ It deletes your `ETags`, it ignores your `If-*` headers, to tramples all over yo
 
 It's an abusive, grumpy, bandwidth wasting, low down dirty dog of a middleware.
 
-But I'm sure you'll fine some use for it in development mode.
+But I'm sure you'll find some use for it in development mode.
 
       $ gem install rack-nocache
 
