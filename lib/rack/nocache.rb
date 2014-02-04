@@ -1,5 +1,10 @@
 module Rack
+  
   class Nocache
+    
+    require 'date'
+    require 'cgi'
+    
     def initialize(app)
       @app = app
     end
@@ -10,10 +15,15 @@ module Rack
     end
 
   protected
+
+    old_date = Time.now - 3600 * 24 * 365 * 25
+    new_date = Date.today.to_time - 3600 * 24 * 30
+    date = Time.at((new_date - old_date)*rand + old_date.to_f)
+    
     CACHE_BUSTER = {
       "Cache-Control" => "no-cache, no-store, max-age=0, must-revalidate",
       "Pragma" => "no-cache",
-      "Expires" => "Fri, 29 Aug 1997 02:14:00 EST"
+      "Expires" => CGI.rfc1123_date(date)
     }
 
     def patch_request_headers(env)
@@ -23,5 +33,7 @@ module Rack
     def patch_response_headers(env)
       env.reject{|k,v| k =~ /^ETag$/i }.merge(CACHE_BUSTER)
     end
+    
   end
+
 end
